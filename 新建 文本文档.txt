@@ -1,0 +1,5 @@
+updatestatus.php 更新发送状态
+yuetx.php   余额提醒
+gethuifumsg.php 获取回复内容
+dsfs.php 定时发送
+taocanchuli.php 套餐处理

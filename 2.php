@@ -1,0 +1,12 @@
+<?
+require_once("common.php");
+require_once("liuliangfunction.php");
+$mobiles="15838289234";
+$packageSize=10;
+$qita["yys"]="MOBILE";
+$err="";
+$a=sendliuliangf59($mobiles,$packageSize,$qita,$err);
+var_dump($a);
+var_dump($err);
+?>
+ok

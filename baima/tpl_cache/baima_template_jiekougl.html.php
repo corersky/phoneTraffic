@@ -1,0 +1,296 @@
+<!doctype html>
+<html>
+<head>
+<title>短信服务平台</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta name=robots content="all">
+<meta name=keywords content="短信服务平台">
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="Bookmark" href="/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="baima/template/css/style.css" />
+</head>
+<body>
+<div id="userinnersystem">
+<div id="container">
+    <div id="header">
+        <div id="headermsg">
+            <div id="headerlogo">
+                <img src="baima/template/images/headerlogo.png" width="260" height="35">
+            </div>
+            <div id="headerset">
+                <a href="<?=XZKJURL?>/logination.php?action=logout"><img src="baima/template/images/exit.png" width="90" height="30"></a>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="mainmenu">
+            <div style="position:relative;">
+                <div class="cont_left fl">
+                    <div>
+                        <div>
+                            <img src="baima/template/images/menutop.png" width="220" height="27">
+                        </div>
+                        <div class="cztips">
+                            <div class="czusername">
+                                用户名：<?=$_SESSION["username"]?>
+                            </div>
+                            <img src="baima/template/images/menutoptexthr.png" width="220" height="4">
+                            <!--<div class="dxye">
+                                <div class="dxyeyuan">
+                                    短信余额：<span class="colorred"><?=$userinfo['dxnum']?>条</span>
+                                </div>
+                                <div class="czimg">
+                                    <a href="<?=XZKJURL?>/user.php?action=caiwuchongzhi"><img src="baima/template/images/menutopcz.png" width="37" height="23"></a>
+                                </div>
+                            </div>-->
+                            <div class="dxye">
+                                <div class="dxyeyuan">
+                                    账户余额：<span class="colorred"><?=$userinfo['dxnum']?>条</span>
+                                </div>
+                                <div class="czimg">
+                                    <a href="<?=XZKJURL?>/user.php?action=caiwuchongzhi"><img src="baima/template/images/menutopchong.png" width="19" height="16"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dxyehr">
+                            <img src="baima/template/images/menutophr.png" width="220" height="10">
+                        </div>
+                    </div>
+                    <ul class="menuList">
+                        <li rel="warp" style="position:relative;">
+                            <a class="menu_a" href="javascript:void(0)">
+                                <span class="menu_icon fl"><div class="bigimg"><img src="baima/template/images/menu1.png" width="25" height="25"></div></span><span id="menulidxgl" class="fl" style="font-family:微软雅黑;">短信管理</span>
+                            </a>
+                            <ul class="nav_menu Ldat hide">
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=sendsms"><li id="fsdx" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu11.png" width="20" height="20"></div><div class="fl">发送短信</div></div></li></a>
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=sendlog"><li id="fsjl" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu12.png" width="20" height="20"></div><div class="fl">发送记录</div></div></li></a>
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=smshuifu"><li id="dxhf" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu13.png" width="20" height="20"></div><div class="fl">短信回复</div></div></li></a>
+                            </ul>
+                        </li>
+                        <li rel="warp" style="position:relative;">
+                            <a class="menu_a" href="javascript:void(0)">
+                                <span class="menu_icon fl"><div class="bigimg"><img src="baima/template/images/menu2.png" width="25" height="25"></div></span><span id="menulizhgl" class="fl" style="font-family:微软雅黑;">账户管理</span>
+                            </a>
+                            <ul class="nav_menu Ldat hide">
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=setuserinfo"><li id="xgzl" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu21.png" width="20" height="20"></div><div class="fl">修改资料</div></div></li></a>
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=setpwd"><li id="xgmm" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu22.png" width="20" height="20"></div><div class="fl">修改密码</div></div></li></a>
+                            </ul>
+                        </li>
+                        <li rel="warp" style="position:relative;">
+                            <a class="menu_a" href="javascript:void(0)">
+                                <span class="menu_icon fl"><div class="bigimg"><img src="baima/template/images/menu3.png" width="25" height="25"></div></span><span id="menulitxl" class="fl" style="font-family:微软雅黑;">通讯录</span>
+                            </a>
+                            <ul class="nav_menu Ldat hide">
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=txlzulist"><li id="fzgl" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu31.png" width="20" height="20"></div><div class="fl">分组管理</div></div></li></a>
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=txluserlist"><li id="glcy" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu32.png" width="20" height="20"></div><div class="fl">管理成员</div></div></li></a>
+                            </ul>
+                        </li>
+                        <li rel="warp" style="position:relative;">
+                            <a class="menu_a" href="javascript:void(0)">
+                                <span class="menu_icon fl"><div class="bigimg"><img src="baima/template/images/menu4.png" width="25" height="25"></div></span><span id="menulicwgl" class="fl" style="font-family:微软雅黑;">财务管理</span>
+                            </a>
+                            <ul class="nav_menu Ldat hide">
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=caiwuwyfp"><li id="wyfp" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu41.png" width="20" height="20"></div><div class="fl">我要发票</div></div></li></a>
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=caiwuchongzhilog"><li id="czjl" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu42.png" width="20" height="20"></div><div class="fl">充值记录</div></div></li></a>
+
+
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=caiwuwdjg"><li id="wdjg" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu43.png" width="20" height="20"></div><div class="fl">我的价格</div></div></li></a>
+
+ <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=caiwuchongzhi"><li id="wycz" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu44.png" width="20" height="20"></div><div class="fl">我要充值</div></div></li></a>
+
+
+
+                            </ul>
+                        </li>
+                        <li rel="warp" style="position:relative;">
+                            <a class="menu_a" href="javascript:void(0)">
+                                <span class="menu_icon fl"><div class="bigimg"><img src="baima/template/images/menu5.png" width="25" height="25"></div></span><span id="menulidxjk" class="fl" style="font-family:微软雅黑;">短信接囗</span>
+                            </a>
+                            <ul class="nav_menu Ldat hide">
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=jiekoushenqing"><li id="jksq" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu51.png" width="20" height="20"></div><div class="fl">接囗申请</div></div></li></a>
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=jiekougl"><li id="jkgl" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu52.png" width="20" height="20"></div><div class="fl">接囗管理</div></div></li></a>
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=jiekoutemp"><li id="dxmb" style="font-family:微软雅黑;"><div class="smallimg1"><div class="smallimg2"><img src="baima/template/images/menu53.png" width="20" height="20"></div><div class="fl">短信模板</div></div></li></a>
+                            </ul>
+                        </li>
+
+<li rel="warp" style="position:relative;">
+                            <a class="menu_a" href="javascript:void(0)">
+                                <span id="menulisjcll" class="fl" style="font-family:微软雅黑;margin-left:65px;">手机充流量</span>
+                            </a>
+                            <ul class="nav_menu Ldat hide">
+                                <!--<a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=liuliangchongzhi"><li id="csjll" style="font-family:微软雅黑;"><div class="smallimg1"><div class="fl">充手机流量</div></div></li></a>-->
+                                <a class="menu_a_a" href="<?=XZKJURL?>/user.php?action=liuliangchongzhilog"><li id="dhjl" style="font-family:微软雅黑;"><div class="smallimg1"><div class="fl">兑换记录</div></div></li></a>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>  
+        </div>
+
+
+
+
+<div id="mains">
+<div id="dxjkjkgl">
+        <div class="kftips" style="background:url(baima/template/images/kfimgbg.png) repeat-x;">
+        	<div class="fl"><img src="baima/template/images/kfimg.png" width="35" height="35"></div>
+            <div class="fl kftipstext">您的专属客服专员：<?=$yingxiaoinfo['username']?>，联系电话：<?=$yingxiaoinfo['sjh']?></div>
+        </div>
+        <div class="kfsitetips" style="background:url(baima/template/images/kfsitebg.png) repeat-x;">
+        	<div class="fl"><img src="baima/template/images/siteimg.png" width="20" height="25"></div>
+            <div class="fl kfsitetipstext">当前位置：短信接囗-接囗管理</div>
+        </div>
+        <div class="colorred fl" style="font-size:14px; font-weight:bold; margin-top:10px;">
+        	<div>注意事项：1.注意接口地址不要写错</div>
+          	<div style="margin-left:75px;">2.提交方式采用http协议post提交</div>
+          	<div style="margin-left:75px;">3.所有编码均采用GBK格式</div>
+        </div>
+        <div class="v1">
+            <div>
+                <span class="cp" onClick="showjksmwd()"><span id="jksmwd1"><img src="baima/template/images/jksmwd1.png" width="100" height="33"></span><span id="jksmwd2" style="display:none;"><img src="baima/template/images/jksmwd2.png" width="100" height="28"></span></span>
+                <span class="cp" onClick="showdmsl()" onMouseMove="showdsmllist()" onMouseOut="closedsmllist()"><span id="dmsl1" style="display:none;"><img src="baima/template/images/dmsl1.png" width="100" height="33"></span><span id="dmsl2"><img src="baima/template/images/dmsl2.png" width="100" height="28"></span></span>
+                <div id="dsmllist" style="position:absolute; margin-left:108px; margin-top:-4px; background-color:#d2f2fd; font-family:'微软雅黑'; font-size:14px; display:none;" onMouseMove="showdsmllist()" onMouseOut="closedsmllist()">
+                	<div class="cp" style="border:#83bbd9 1px solid; width:98px; height:20px; padding-top:5px;" onClick="showphp()">
+                    	PHP代码示例
+                    </div>
+                    <div class="cp" style="border:#83bbd9 1px solid; width:98px; height:20px; padding-top:5px;" onClick="showjava()">
+                    	java代码示例
+                    </div>
+                    <div class="cp" style="border:#83bbd9 1px solid; width:98px; height:20px; padding-top:5px;" onClick="showasp()">
+                    	asp代码示例
+                    </div>
+                </div>
+            </div>
+            <div class="v2">
+                <div id="mythetable">
+                    <div id="table">
+                    	<ul id="jksmwdshow">
+                            <li class="title v4">
+                                接囗说明文档
+                            </li>
+                            <li style="height:350px;">
+                                <div class="v3">
+                                    <textarea id="thejksmwdtext" style="color:#666;width:720px;height:310px; font-size:16px;resize: none; background-color:#FFF; line-height:20px; border:none;" name="" maxlength="1000000" onpropertychange="if(value.length>1000000) value=value.substr(0,1000000)" onKeyPress="this.style.color='black';" disabled readonly>
+一、发送接口：
+1.请求地址：请求地址是客户接口程序调用时请求的url地址，采用的是http post 接口，地址是：http://duanxin.xzkj168.cn/server/sendsms.php
+（入口地址一般不会发生变化，当发生变化的时候，会通知接口用户）
+
+2.参数说明
+
+参数名称        说明
+username        账号
+pwd             密码
+mobile          全部发送的号码，多个号码之间用半角逗号隔开
+content         发送内容	短信的内容，内容需要GBK编码
+sendtime        定时发送时间 为空表示立即发送，定时发送格式2010-10-24 09:08:10
+例如：
+username=账号&pwd=密码&mobile=15023230000&content=内容&sendtime=
+3返回值
+在接收到客户端发送的http请求后，返回一个数字代码。格式为：
+
+0:  参数信息不完整
+1:  用户名密码错误。
+2:  短信内容和模板不匹配。
+3:  定时发送时间过短。（定时发送时间要大于当前时间五分钟以上）。
+4:  余额不足。
+5:  提交失败。
+6:  不是接口用户
+
+20: 由于网络等原因，造成异常错误，提交失败，请重新提交。
+200:提交成功
+
+
+二.余额查询接口
+2.1请求地址
+请求地址是客户接口程序调用时请求的url地址，采用的是http post 接口，地址是
+http://duanxin.xzkj168.cn/server/getyue.php
+入口地址一般不会发生变化，当发生变化的时候，会通知接口用户	
+
+2.2参数说明
+
+参数名称 	   说明
+username	   账号
+pwd	           密码
+例如：
+username=账号&pwd=密码
+2.3返回值
+在接收到客户端发送的http请求后，返回一个数字代码。格式为：
+
+-1：参数信息不完整
+-2: 用户名密码错误
+-3: 不是接口用户
+
+其他：短信余额（返回的数字如果大于等于0，则表示此为余额）。
+</textarea>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul id="phpshow" style="display:none;">
+                            <li class="title v4">
+                                php代码示例
+                            </li>
+                            <li style="height:350px;">
+                                <div class="v3">
+                                    <textarea id="thephptext" style="color:#666;width:720px;height:310px; font-size:16px;resize: none; background-color:#FFF; line-height:20px; border:none;" name="" maxlength="1000000" onpropertychange="if(value.length>1000000) value=value.substr(0,1000000)" onKeyPress="this.style.color='black';" disabled readonly><?=$shili_php?></textarea>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul id="javashow" style="display:none;">
+                            <li class="title v4">
+                                java代码示例
+                            </li>
+                            <li style="height:350px;">
+                                <div class="v3">
+                                    <textarea id="thejavatext" style="color:#666;width:720px;height:310px; font-size:16px;resize: none; background-color:#FFF; line-height:20px; border:none;" name="" maxlength="1000000" onpropertychange="if(value.length>1000000) value=value.substr(0,1000000)" onKeyPress="this.style.color='black';" disabled readonly><?=$shili_java?></textarea>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul id="aspshow" style="display:none;">
+                            <li class="title v4">
+                                asp代码示例
+                            </li>
+                            <li style="height:350px;">
+                                <div class="v3">
+                                    <textarea id="theasptext" style="color:#666;width:720px;height:310px; font-size:16px;resize: none; background-color:#FFF; line-height:20px; border:none;" name="" maxlength="1000000" onpropertychange="if(value.length>1000000) value=value.substr(0,1000000)" onKeyPress="this.style.color='black';" disabled readonly><?=$shili_asp?></textarea>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="v6" style=" display:none;">
+            <div class="v7">
+                您还没有申请短信接囗，请先<a href="" style="color:#0078ad;">&gt;&gt;接囗申请</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="baima/template/js/jquery.min.js" type="text/javascript"></script>
+<script src="baima/template/js/dxxtmenu.js" type="text/javascript"></script>
+<script src="baima/template/js/dxjkjkgl.js" type="text/javascript"></script>
+
+
+
+
+
+
+    </div>
+    <div id="footer">
+        <div id="copyright">
+            <p>Copyright 2011 郑州新中电子科技有限公司 版权所有 豫ICP备09015928号</p>
+            <p>工作时间：周一至周五8:30-18:30（节假日除外）公司地址：郑州市健康路168号</p>
+<script type="text/javascript" src="http://js.tongji.linezing.com/3594310/tongji.js"></script><noscript><a href="http://www.linezing.com"><img src="http://img.tongji.linezing.com/3594310/tongji.gif"/></a></noscript>
+
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
