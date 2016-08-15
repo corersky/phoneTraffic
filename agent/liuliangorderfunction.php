@@ -2149,7 +2149,7 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 		$re=$con->query($sql);//更新用户余额
 
 		if(empty($re)){
-			$aaa=date("Y-m-d H:i:s").":扣费失败： uid:".$uid." sjh:".$sjh.'sql:'.$sql;
+			$aaa=date("Y-m-d H:i:s").":扣费失败： uid:".$uid." sjh:".$sjh.'sql:'.$sql.' '.mysql_error();
 			csw("agentOrderPostError.log",$aaa);
             return FALSE;
 		}
