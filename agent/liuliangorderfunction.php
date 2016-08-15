@@ -2149,7 +2149,7 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 		$re=$con->query($sql);//更新用户余额
 
 		if(empty($re)){
-			$aaa=date("Y-m-d H:i:s").":扣费失败： uid:".$uid." sjh:".$sjh;
+			$aaa=date("Y-m-d H:i:s").":扣费失败： uid:".$uid." sjh:".$sjh.'sql:'.$sql;
 			csw("agentOrderPostError.log",$aaa);
             return FALSE;
 		}
@@ -2185,7 +2185,7 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 		);
 		$id=$con->insertabe("liuliangdaili_log",$inarr);
         if(!$id){
-            $aaa=date("Y-m-d H:i:s")."：保存订单信息失败： uid:".$uid." sjh:".$sjh;
+            $aaa=date("Y-m-d H:i:s")."：保存订单信息失败： uid:".$uid." sjh:".$sjh.' 信息:'.json_encode($inarr);
 			csw("agentOrderPostError.log",$aaa);
             return FALSE;
         }
