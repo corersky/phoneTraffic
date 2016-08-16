@@ -1596,6 +1596,296 @@ function liuliang_tongdaoation_81($uid,$sjh,$liuliang,&$err){
 	global $con;
 		return liuliang_tongdaoation_ty($uid,$sjh,$liuliang,81,$err);
 }
+
+function liuliang_tongdaoation_83($uid,$sjh,$liuliang,&$err){
+	global $con;
+		return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,83);
+}
+
+
+//发送成功返回true 失败 false 
+function liuliang_tongdaoation_82($uid,$sjh,$liuliang,&$err,$tongdaoid=82){
+	global $con;
+    
+		//此通道失败时直接推送过来，会有本程序还未处理完时推送过来不识别情况
+		//判断对方传送的手机号归属
+		$hd=substr($sjh,0,4);
+		$sql="select gs from `tool_haoduan` where hd='".$hd."'";
+		$re=$con->query($sql);
+		$row=mysql_fetch_array($re);
+		$sjhtype= intval($row["gs"]);
+		//处理联通套餐
+		$liuliang=intval($liuliang);
+		
+		$sql="select * from `user_daili` where id=".$uid;
+		$re=$con->query($sql);
+		$userinfo=mysql_fetch_array($re);
+		$dxnum=floatval($userinfo["dxnum"]);//余额
+		$liantongzk=floatval($userinfo["liantongzk"]);//折扣
+		$dianxinzk=floatval($userinfo["dianxinzk"]);//折扣
+		$yidongzk=floatval($userinfo["yidongzk"]);//折扣
+		
+		$sjhinfo=getsjhinfo($sjh);
+
+		
+		//处理移动
+		$yidongtcarr=array(
+			"10"=>array("dxnum"=>75,"mianzhi"=>3),
+			"30"=>array("dxnum"=>125,"mianzhi"=>5),
+			"70"=>array("dxnum"=>250,"mianzhi"=>10),
+            "100"=>array("dxnum"=>300,"mianzhi"=>10),
+			"150"=>array("dxnum"=>500,"mianzhi"=>20),
+			"500"=>array("dxnum"=>750,"mianzhi"=>30),
+			"1024"=>array("dxnum"=>1250,"mianzhi"=>50),
+			"2048"=>array("dxnum"=>1750,"mianzhi"=>70),
+			"3072"=>array("dxnum"=>2500,"mianzhi"=>100),
+			"4096"=>array("dxnum"=>3250,"mianzhi"=>130),
+			"6144"=>array("dxnum"=>4500,"mianzhi"=>180),
+			"11264"=>array("dxnum"=>7000,"mianzhi"=>280)
+		);
+		$kfmianzhi=0;//付款面值
+		if(empty($sjhtype)){
+			if(empty($yidongtcarr[$liuliang])){
+				$err="选择套餐错误！";
+				return false;
+			}
+			$kfmianzhi=intval($yidongtcarr[$liuliang]["mianzhi"]);
+		}else if($sjhtype==1){
+			if(empty($liantongtcarr[$liuliang])){
+				$err="选择套餐错误！";
+				return false;
+			}
+			$kfmianzhi=intval($liantongtcarr[$liuliang]["mianzhi"]);
+		}else if($sjhtype==2){
+			if(empty($dianxintcarr[$liuliang])){
+				$err="选择套餐错误！";
+				return false;
+			}
+			$kfmianzhi=intval($dianxintcarr[$liuliang]["mianzhi"]);
+		}
+		
+		if($kfmianzhi<=0){
+			$err="选择套餐错误！";
+			return false;
+		}
+		
+		$zongfeiyong=$kfmianzhi*$yidongzk*0.1;//扣费金额
+		if($sjhtype==1){
+			$zongfeiyong=$kfmianzhi*$liantongzk*0.1;//扣费金额
+		}elseif($sjhtype==2){
+			$zongfeiyong=$kfmianzhi*$dianxinzk*0.1;//扣费金额
+		}
+		
+		//判断金额
+		$userdxnum=$dxnum-$zongfeiyong;
+		if($userdxnum<0){
+			$err="余额不足！";
+			return false;
+		}
+	
+		
+		//获取通道价和毛利
+		$sql="select * from `liuliangtongdaolist` where id=".$tongdaoid;
+		$re=$con->query($sql);
+		$tongdaoinfo=mysql_fetch_array($re);
+		$tdyidongzk=floatval($tongdaoinfo["yidongzk"]);//移动折扣
+		$tdliantongzk=floatval($tongdaoinfo["liantongzk"]);//折扣
+		$tddianxinzk=floatval($tongdaoinfo["dianxinzk"]);//折扣
+		
+		$tdzongfeiyong=$kfmianzhi*$tdyidongzk*0.1;//通道扣费金额
+		if($sjhtype==1){
+			$tdzongfeiyong=$kfmianzhi*$tdliantongzk*0.1;//扣费金额
+		}elseif($sjhtype==2){
+			$tdzongfeiyong=$kfmianzhi*$tddianxinzk*0.1;//扣费金额
+		}
+		$maoli=$zongfeiyong-$tdzongfeiyong;
+
+        $functionname=trim($tongdaoinfo["functionname"]); ##对应通道流量推送方法
+    	if(!function_exists($functionname)){
+    		$err="获取通道推送方法失败";
+    		return false;
+    	}
+    
+    	//获取发送通道维护信息
+    	$nowtime=time();
+    	$sql="select sheng,starttime,endtime  from `weihudqlist` where tongdaoid=".$tongdaoid." and starttime<".$nowtime." and  endtime>".$nowtime;
+    	$re=$con->query($sql);
+    	$shengs="";
+    	while($row=mysql_fetch_array($re)){
+    		$shengs.=$row["sheng"].",";
+    	}
+    	if(!empty($shengs)){
+    		$sjhinfo=getsjhinfo($sjh);
+    		$province=$sjhinfo["province"];
+    		$bdllarr="";
+    		$preg_ah="/".$province."/is";
+    		if (preg_match($preg_ah,$shengs,$bdllarr)) {
+    			$err="指定地区维护中";
+    			return false;
+    		}
+    	}
+    
+    	$sjhhd=substr($sjh,0,3);
+    	if(($sjhhd=="147") || ($sjhhd=="170")){
+    			$err="指定号段已关闭";
+    			return false;
+    	}
+
+		//开通成功
+		//$sql="UPDATE user_daili set dxnum=".$userdxnum." where id=".$uid;
+		$sql="UPDATE user_daili set dxnum=dxnum-".$zongfeiyong." where id=".$uid;
+		$re=$con->query($sql);//更新用户余额
+        if(!$re){
+            $msg    =   '扣除费用失败!';
+            return FALSE;
+        }
+		$zt=0;
+		
+		$msg=$zongfeiyong."元购买".$liuliang."M流量";
+		$inarr=array(
+			"uid"=>$uid,
+			"sjh"=>$sjh,
+			"sjhtype"=>$sjhtype,
+			"tcid"=>0,
+			"liuliang"=>intval($liuliang),
+			"dxnum"=>0,
+	
+			"mianzhi"=>$kfmianzhi,
+			"shje"=>$zongfeiyong,
+			"msg"=>$msg,
+			
+			"zt"=>$zt,
+			"msgId"=>"",
+			"apimsg"=>"",
+			"tdjg"=>$tdzongfeiyong,
+			"maoli"=>$maoli,
+			
+			"province"=>$sjhinfo["province"],
+
+			"city"=>$sjhinfo["city"],
+			
+			"tongdaoid"=>$tongdaoid,
+			"createtime"=>time()
+		);
+		$id=$con->insertabe("liuliangdaili_log",$inarr);
+        if(!$id){
+            $msg    =   '保存订单信息失败!';
+            return FALSE;
+        }
+
+		$err="";
+		$a=sendliuliang($sjh,$liuliang,$tongdaoid,"",$err, $functionname);
+		
+		$inarr=array(
+			"msgId"=>$a,
+			"apimsg"=>$err
+		);
+		
+		if(empty($a)){
+			$inarr["zt"]=3;
+		}
+        
+		$re=$con->updatetabe("liuliangdaili_log",$inarr,$id,"id");
+        if(!$re){
+            $aaa=date("Y-m-d H:i:s")."通道{$tongdaoid}提交失败 uid:".$uid." sjh:".$sjh." id:".$id.' msgId:'.$a.' '.json_encode($inarr);
+			csw("submitFail.log",$aaa);
+        }
+		
+		return true;
+}
+
+function liuliang_tongdaoation_84($uid,$sjh,$liuliang,&$err){
+	global $con;
+		return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,84);
+}
+
+function liuliang_tongdaoation_85($uid,$sjh,$liuliang,&$err){
+	global $con;
+		return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,85);
+}
+
+function liuliang_tongdaoation_86($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,86);
+}
+function liuliang_tongdaoation_87($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,87);
+}
+function liuliang_tongdaoation_88($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,88);
+}
+function liuliang_tongdaoation_89($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,89);
+}
+function liuliang_tongdaoation_90($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,90);
+}
+function liuliang_tongdaoation_91($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,91);
+}
+function liuliang_tongdaoation_92($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,92);
+}
+function liuliang_tongdaoation_93($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,93);
+}
+function liuliang_tongdaoation_94($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,94);
+}
+function liuliang_tongdaoation_95($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,95);
+}
+function liuliang_tongdaoation_96($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,96);
+}
+function liuliang_tongdaoation_97($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,97);
+}
+function liuliang_tongdaoation_98($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,98);
+}
+function liuliang_tongdaoation_99($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,99);
+}
+function liuliang_tongdaoation_100($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,100);
+}
+function liuliang_tongdaoation_101($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,101);
+}
+function liuliang_tongdaoation_102($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,102);
+}
+function liuliang_tongdaoation_103($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,103);
+}
+function liuliang_tongdaoation_104($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,104);
+}
+function liuliang_tongdaoation_105($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,105);
+}
+
+
 /************通用************/
 //发送成功返回true 失败 false 
 function liuliang_tongdaoation_ty($uid,$sjh,$liuliang,$tongdaoid,&$err){

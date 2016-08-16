@@ -2050,6 +2050,63 @@ function sendliuliangf81_getstatus(){
 
 }
 
+function sendliuliangf82($mobiles,$packageSize,$qita,&$err){
+	global $con;
+	$hd=substr($mobiles,0,4);
+	$sjhtype=getsjhdgs($hd);
+	$ownership="MOBILE";
+	if($sjhtype==1){
+		$ownership="UNICOM";
+	}
+	if($sjhtype==2){
+		$ownership="TELECOM";
+	}
+	
+	
+	$mobileNo=$mobiles;
+	$ownership=$ownership;
+	$agentCode="AGENT10000002012";
+	$agentOrderNo="".time().rand(1,9).rand(1,9).rand(10,99);
+	$orderAmount=$packageSize;
+	$provinceCode="100000";
+	$isNotify=1;
+	$notifyUrl="http://duanxin.xzkj168.cn/c59getstate.php";
+	$requestTimestamp=time();
+
+	$my="PQ1F4ADAC20EF967DQK";
+	$mw='mobileNo='.$mobileNo.'&ownership='.$ownership.'&agentCode='.$agentCode.'&agentOrderNo='.$agentOrderNo.'&orderAmount='.$orderAmount.'&provinceCode='.$provinceCode.'&isNotify='.$isNotify.'&notifyUrl='.$notifyUrl.'&requestTimestamp='.$requestTimestamp;
+	$sign=hash_hmac("md5",$mw,$my);
+	$mw=$mw."&hmac=".$sign;
+	
+	
+	$url='https://yeeyk.com/md-service/order/acceptOrder';
+ $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $mw);
+    $result =  curl_exec($ch);
+    curl_close($ch);
+	csw("log/td59sendre".date("Ymd").".txt",$result);
+	//$a=iconv("UTF-8","GBK//IGNORE",$a);
+	$json=json_decode($result,true);
+	$orderNo=$json["orderNo"];
+	$code=$json["code"];
+	if($code=="000000"){
+		$err=iconv("UTF-8","GBK//IGNORE",$result);
+		$err=addslashes($err);
+		return $orderNo;
+	}
+	$err=iconv("UTF-8","GBK//IGNORE",$result);
+	$err=addslashes($err);
+	return false;
+}
+function sendliuliangf82_getstatus(){
+
+}
+
 
 
 //下面是工具类函数
