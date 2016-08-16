@@ -2,6 +2,8 @@
 class MySQL
 { 
 	var $conn;
+    static $_instance;
+    
 	/**
 	构造函数
 	*/
@@ -11,6 +13,18 @@ class MySQL
 		mysql_select_db(DB_DATABASENAME,$this->conn) or die("error #2");
 		mysql_query('set names gbk'); 		
 	}
+    
+    ##禁止克隆
+    public function __clone(){}
+    
+    ##单例模式
+    public static function getInstance(){
+        if(!self::$_instance instanceof self){
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+    
 	/**
 	执行一条sql语句
 	*/
