@@ -5,9 +5,9 @@
 	require_once("liuliangorderfunction.php");
 	
 	$con=new MySql();
+    
+	csw("log11.txt",date('Y-m-d H:i:s').':'.json_encode($_POST));
 	
-$aaa=serialize($_POST);
-	csw("log11.txt",$aaa);
 	
 	$sjh=trim($_POST["sjh"]);
 	$liuliang=trim($_POST["liuliang"]);

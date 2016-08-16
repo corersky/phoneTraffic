@@ -2190,7 +2190,13 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
             return FALSE;
         }
         
-        $a=sendliuliang($sjh,$liuliang,$tongdaoid,"",$err,$functionname);
+        if(isset($_POST['test'])){
+            echo '测试成功!';
+            exit;
+        }else{
+            $a=sendliuliang($sjh,$liuliang,$tongdaoid,"",$err,$functionname);
+        }
+        
         
         $inarr=array(
 			"msgId"=>$a,
@@ -2405,6 +2411,8 @@ function liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$errmsg,$ly){
 
 			"createtime"=>time()
 	);
+    $aaa=date("Y-m-d H:i:s").":基本信息错误 uid:".$uid." sjh:".$sjh.' 信息:'.$errmsg;
+	csw("agentOrderPostError.log",$aaa);
 	//$id=$con->insertabe("liuliangdaili_log",$inarr);
 	die("0");
 }
