@@ -146,7 +146,7 @@ function liuliang_fanhuandxnum_daili_llsendtool($tid){
 	if(!$re){
 	   return FALSE;
 	}
-	
+	return true;
 	//$str=date("Y-m-d H:i:s")."uid:".$uid." dxnum:".$dxnum."\n";
 	//csw("liuliangerr.log",$str);
 	
