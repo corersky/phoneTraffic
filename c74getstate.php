@@ -1,7 +1,9 @@
 <?php
 ignore_user_abort();//¶Ï¿ªä¯ÀÀÆ÷¼ÌÐøÖ´ÐÐ
 require_once("common.php");
-$con=new MySql();
+
+//$con=new MySql();
+$con   =   MySQL::getInstance();
 
 $str=serialize($_GET).":".serialize($_POST)."\n\n";
 //csw("74.log",$str);

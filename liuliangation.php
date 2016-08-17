@@ -4,7 +4,10 @@
 	//require_once("source/liuliangfunction.php");
 	require_once("liuliangfunction.php");
 	require_once("liuliangorderfunction.php");
-	$con=new MySql();
+	
+    //$con=new MySql();
+    $con   =   MySQL::getInstance();
+    
 	$action=$_GET["action"];
 	if(empty($_SESSION["uid"]) || empty($_SESSION["username"])){
 		die("<script>alert('ÇëÖØÐÂµÇÂ¼!');window.parent.location.href='".XZKJURL."/index.php';</script>");

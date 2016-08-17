@@ -5,7 +5,10 @@ $do = empty($_GET['action'])?'userindex':$_GET['action'];
 if(empty($_SESSION["uid"]) || empty($_SESSION["username"])){
 	exit_location_href();
 }
-$con=new MySql();
+
+//$con=new MySql();
+$con   =   MySQL::getInstance();
+    
 //获取用户信息
 $sql="select * from `user` where id=".$_SESSION["uid"];
 $re=$con->query($sql);

@@ -2,8 +2,10 @@
 	ignore_user_abort();//¶Ï¿ªä¯ÀÀÆ÷¼ÌÐøÖ´ÐÐ
 	require_once("common.php");
 	require_once("source/liuliangfunction.php");
-	$con=new MySql();
 	
+    //$con=new MySql();
+    $con   =   MySQL::getInstance();
+
 	
 	$apizh=trim($_POST["apizh"]);
 	$apipwd=trim($_POST["apipwd"]);

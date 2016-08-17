@@ -2,7 +2,10 @@
 ignore_user_abort();//断开浏览器继续执行
 require_once("common.php");
 require_once("smsfunction.php");
-$con=new MySql();
+
+//$con=new MySql();
+$con   =   MySQL::getInstance();
+    
 getsmshuifu();
 
 //启动流量状态更新程序

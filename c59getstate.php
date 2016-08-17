@@ -1,7 +1,9 @@
 <?php
 ignore_user_abort();//¶Ï¿ªä¯ÀÀÆ÷¼ÌÐøÖ´ÐÐ
 require_once("common.php");
-$con=new MySql();
+
+//$con=new MySql();
+$con   =   MySQL::getInstance();
 
 $nowtime=time();
 $time=time()-60*60*24*14;

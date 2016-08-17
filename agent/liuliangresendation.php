@@ -3,7 +3,10 @@
 	require_once("common.php");
 	require_once("../liuliangfunction.php");
 	require_once("liuliangresendfunction.php");
-	$con=new MySql();
+	
+    //$con=new MySql();
+    $con   =   MySQL::getInstance();
+    
 	$action=$_GET["action"];
 
 if(empty($_SESSION["kefu_uid"]) && empty($_SESSION["admin_uid"])){

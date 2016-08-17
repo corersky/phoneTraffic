@@ -6,7 +6,9 @@ if(empty($_SESSION["dl_uid"]) || empty($_SESSION["dl_username"])){
 	$do="login";
 }
 
-$con=new MySql();
+    //$con=new MySql();
+    $con   =   MySQL::getInstance();
+    
 //获取用户信息
 $sql="select * from `user_daili` where id=".$_SESSION["dl_uid"];
 $re=$con->query($sql);

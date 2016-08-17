@@ -2,7 +2,9 @@
 ignore_user_abort();//断开浏览器继续执行
 require_once("common.php");
 require_once("smsfunction.php");
-$con=new MySql();
+
+//$con=new MySql();
+$con   =   MySQL::getInstance();
 
 //获取要定时发送的订单
 $nowtime=time();

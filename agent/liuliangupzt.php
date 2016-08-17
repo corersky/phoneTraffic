@@ -2,7 +2,10 @@
 	ignore_user_abort();//断开浏览器继续执行
 	require_once("common.php");
 	require_once("source/liuliangfunction.php");
-	$con=new MySql();
+	
+    //$con=new MySql();
+    $con   =   MySQL::getInstance();
+    
 	//更新卡密充值状态
 
 $time=time()-60*60*24*15;

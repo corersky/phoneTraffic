@@ -1,7 +1,9 @@
 <?php
 ignore_user_abort();//¶Ï¿ªä¯ÀÀÆ÷¼ÌÐøÖ´ÐÐ
 require_once("common.php");
-$con=new MySql();
+//$con=new MySql();
+$con   =   MySQL::getInstance();
+
 $somecontent=serialize($_GET).":".serialize($_POST);
 //csw("baitdcs.txt",$somecontent);
 csw(S_ROOT.'receive_log/'.date('Y-m-d H_i_s').'_c23.log', $somecontent);

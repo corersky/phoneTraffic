@@ -1,7 +1,10 @@
 <?php 
 	ignore_user_abort();//¶Ï¿ªä¯ÀÀÆ÷¼ÌÐøÖ´ÐÐ
 	require_once("common.php");
-	$con=new MySql();
+	
+    //$con=new MySql();
+    $con   =   MySQL::getInstance();
+    
 	$pwd=trim($_POST["pwd"]);
 	if(!empty($pwd)){
 		if($pwd!="1234"){

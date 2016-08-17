@@ -1,7 +1,10 @@
 <?php 
 	ignore_user_abort();//断开浏览器继续执行
 	require_once("common.php");
-	$con=new MySql();
+	
+    //$con=new MySql();
+    $con   =   MySQL::getInstance();
+    
 	$action=$_GET["action"];
 	if(empty($_SESSION["kefu_uid"]) || empty($_SESSION["kefu_username"])){
 		die("<script>alert('请重新登录!');window.parent.location.href='".XZKJURL."/index.php';</script>");

@@ -1,7 +1,10 @@
 <?php 
 	ignore_user_abort();//断开浏览器继续执行
 	require_once("common.php");
-	$con=new MySql();
+	
+    //$con=new MySql();
+    $con   =   MySQL::getInstance();
+    
 	$nowtime=time();
 	//获取所有有权限退款的用户
 	$sql="select id,jiage,smssbtkbz,tksj from `user` where smssbtkbz=1";

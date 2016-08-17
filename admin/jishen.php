@@ -3,7 +3,9 @@
 	require_once("common.php");
 	require_once("../smsfunction.php");
 	require_once("../jishenfunction.php");
-	$con=new MySql();
+	
+    //$con=new MySql();
+    $con   =   MySQL::getInstance();
 	
 	
 	//获取所有未处理订单

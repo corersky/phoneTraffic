@@ -2,7 +2,9 @@
 ignore_user_abort();//¶Ï¿ªä¯ÀÀÆ÷¼ÌÐøÖ´ÐÐ
 require_once("common.php");
 $headercontent=file_get_contents("php://input");
-$con=new MySql();
+
+//$con=new MySql();
+$con   =   MySQL::getInstance();
 
 //csw("td15_".date("Ymd").".txt",$headercontent);
 csw(S_ROOT.'receive_log/'.date('Y-m-d H_i_s').'_c15.log', $headercontent);

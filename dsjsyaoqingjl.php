@@ -1,7 +1,10 @@
 <?php
 ignore_user_abort();//断开浏览器继续执行
 require_once("common.php");
-$con=new MySql();
+
+//$con=new MySql();
+$con   =   MySQL::getInstance();
+
 $nowtime=time();
 //先获取最后一次执行的时间
 $sql="select * from `configdb` where configkey='yaoqingjstime'";

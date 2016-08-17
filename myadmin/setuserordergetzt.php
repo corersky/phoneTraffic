@@ -2,7 +2,10 @@
 	ignore_user_abort();//¶Ï¿ªä¯ÀÀÆ÷¼ÌÐøÖ´ÐÐ
 	require_once("common.php");
 	require_once("../smsfunction.php");
-	$con=new MySql();
+	
+    //$con=new MySql();
+    $con   =   MySQL::getInstance();
+    
 	$usernick=trim($_POST["usernick"]);
 	$time=intval($_POST["time"]);
 	$pwd=trim($_POST["pwd"]);

@@ -4,7 +4,10 @@
 	if(empty($_SESSION["admin_uid"]) || empty($_SESSION["admin_username"])){
 		die("<script>alert('ÇëÖØÐÂµÇÂ¼!');window.parent.location.href='".XZKJURL."/index.php';</script>");
 	}
-$con=new MySql();
+
+    //$con=new MySql();
+    $con   =   MySQL::getInstance();
+    
 	$orderarr=array();
 	$sjh=trim($_POST["sjh"]);
 

@@ -4,7 +4,7 @@
 	require_once("../liuliangfunction.php");
 	require_once("liuliangorderfunction.php");
 	
-	$con=new MySql();
+    $con   =   MySQL::getInstance();
     
 	csw("log11.txt",date('Y-m-d H:i:s').':'.json_encode($_POST));
 	
