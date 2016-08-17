@@ -113,7 +113,7 @@ font-size:13px;
 #dlsglxfjl #table li span.list8{
 text-decoration:none;
 float:left;
-width:40px;
+min-width:40px;
 height:14px;
 overflow:hidden;
 cursor:default;
