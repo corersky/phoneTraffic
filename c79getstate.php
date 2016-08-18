@@ -7,7 +7,7 @@ $con   =   MySQL::getInstance();
 
 $str=serialize($_GET).":".serialize($_POST)."\n\n";
 //csw("79.log",$str);
-csw(S_ROOT.'receive_log/'.date('Y-m-d H_i_s').'_c74.log', $headercontent);
+csw(S_ROOT.'receive_log/'.date('Y-m-d H_i_s').'_c79.log', json_encode($_POST));
 
 $nowtime=time();
 $time=time()-60*60*24*14;
