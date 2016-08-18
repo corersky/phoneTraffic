@@ -267,25 +267,25 @@ function tiaozhuan(url){
                         
 <script type="text/javascript">
 function xg(obj)
-{
-	document.getElementById("mytxt"+obj.id.substring(4,6)).style.display="none";
-	document.getElementById("myinput"+obj.id.substring(4,6)).style.display="";
-	document.getElementById("mytheinput"+obj.id.substring(4,6)).value=document.getElementById("mytxt"+obj.id.substring(4,6)).innerHTML;
+{   
+	document.getElementById("mytxt"+obj.id.substring(4)).style.display="none";
+	document.getElementById("myinput"+obj.id.substring(4)).style.display="";
+	document.getElementById("mytheinput"+obj.id.substring(4)).value=document.getElementById("mytxt"+obj.id.substring(4)).innerHTML;
 	
-	document.getElementById("myydtxt"+obj.id.substring(4,6)).style.display="none";
-	document.getElementById("myydinput"+obj.id.substring(4,6)).style.display="";
-	document.getElementById("yidongzk"+obj.id.substring(4,6)).value=document.getElementById("myydtxt"+obj.id.substring(4,6)).innerHTML;
+	document.getElementById("myydtxt"+obj.id.substring(4)).style.display="none";
+	document.getElementById("myydinput"+obj.id.substring(4)).style.display="";
+	document.getElementById("yidongzk"+obj.id.substring(4)).value=document.getElementById("myydtxt"+obj.id.substring(4)).innerHTML;
 	
-	document.getElementById("mylttxt"+obj.id.substring(4,6)).style.display="none";
-	document.getElementById("myltinput"+obj.id.substring(4,6)).style.display="";
-	document.getElementById("yidongzk"+obj.id.substring(4,6)).value=document.getElementById("mylttxt"+obj.id.substring(4,6)).innerHTML;
+	document.getElementById("mylttxt"+obj.id.substring(4)).style.display="none";
+	document.getElementById("myltinput"+obj.id.substring(4)).style.display="";
+	document.getElementById("yidongzk"+obj.id.substring(4)).value=document.getElementById("mylttxt"+obj.id.substring(4)).innerHTML;
 	
-	document.getElementById("mydxtxt"+obj.id.substring(4,6)).style.display="none";
-	document.getElementById("mydxinput"+obj.id.substring(4,6)).style.display="";
-	document.getElementById("yidongzk"+obj.id.substring(4,6)).value=document.getElementById("mydxtxt"+obj.id.substring(4,6)).innerHTML;
+	document.getElementById("mydxtxt"+obj.id.substring(4)).style.display="none";
+	document.getElementById("mydxinput"+obj.id.substring(4)).style.display="";
+	document.getElementById("yidongzk"+obj.id.substring(4)).value=document.getElementById("mydxtxt"+obj.id.substring(4)).innerHTML;
 	
-	document.getElementById("myxg"+obj.id.substring(4,6)).style.display="none";
-	document.getElementById("mybc"+obj.id.substring(4,6)).style.display="";
+	document.getElementById("myxg"+obj.id.substring(4)).style.display="none";
+	document.getElementById("mybc"+obj.id.substring(4)).style.display="";
 }
 function showtips(obj)
 {
