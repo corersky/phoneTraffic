@@ -1885,6 +1885,11 @@ function liuliang_tongdaoation_105($uid,$sjh,$liuliang,&$err){
   return liuliang_tongdaoation_82($uid,$sjh,$liuliang,$err,105);
 }
 
+function liuliang_tongdaoation_106($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_ty($uid,$sjh,$liuliang,$err,106);
+}
+
 
 /************通用************/
 //发送成功返回true 失败 false 
@@ -2151,7 +2156,7 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 			"10"=>array("dxnum"=>75,"mianzhi"=>3),
 			"30"=>array("dxnum"=>125,"mianzhi"=>5),
 			"70"=>array("dxnum"=>250,"mianzhi"=>10),
-			"100"=>array("dxnum"=>250,"mianzhi"=>13),
+			"100"=>array("dxnum"=>250,"mianzhi"=>10),
 			"150"=>array("dxnum"=>500,"mianzhi"=>20),
 			"300"=>array("dxnum"=>500,"mianzhi"=>20),
 			"500"=>array("dxnum"=>750,"mianzhi"=>30),
