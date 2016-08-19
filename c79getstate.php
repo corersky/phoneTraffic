@@ -7,7 +7,7 @@ $con   =   MySQL::getInstance();
 
 $str=serialize($_GET).":".serialize($_POST)."\n\n";
 //csw("79.log",$str);
-csw(S_ROOT.'receive_log/'.date('Y-m-d H_i_s').'_c79.log', json_encode($_POST));
+csw(S_ROOT.'receive_log/'.date('Y-m-d H_i_s').'_c79.log', $str);
 
 $nowtime=time();
 $time=time()-60*60*24*14;
@@ -25,6 +25,13 @@ $apimsg=serialize($_GET);
 $apimsg=addslashes($apimsg);
 
 $con->begin();
+$sql    =   'select id,zt from liuliangdaili_log where msgId ="'.$TaskID.'" and createtime >'.$time;
+$res    =   $con->query($sql);
+$res    =   $con->fetcharray($res);
+if(empty($res) || $res['zt'] != 0){
+    echo 'error';
+    exit;
+}
 
 if($Status=="4"){
 		$sql="UPDATE liuliangdaili_log SET zt=1,apimsg='".$apimsg."',upzttime=".$nowtime." where msgId='".$TaskID."' and createtime>".$time."";
