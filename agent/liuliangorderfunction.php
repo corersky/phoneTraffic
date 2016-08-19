@@ -1890,6 +1890,31 @@ function liuliang_tongdaoation_106($uid,$sjh,$liuliang,&$err){
   return liuliang_tongdaoation_ty($uid,$sjh,$liuliang,$err,106);
 }
 
+function liuliang_tongdaoation_107($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_ty($uid,$sjh,$liuliang,$err,107);
+}
+
+function liuliang_tongdaoation_108($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_ty($uid,$sjh,$liuliang,$err,108);
+}
+
+function liuliang_tongdaoation_109($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_ty($uid,$sjh,$liuliang,$err,109);
+}
+
+function liuliang_tongdaoation_110($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_ty($uid,$sjh,$liuliang,$err,110);
+}
+
+function liuliang_tongdaoation_111($uid,$sjh,$liuliang,&$err){
+  global $con;
+  return liuliang_tongdaoation_ty($uid,$sjh,$liuliang,$err,111);
+}
+
 
 /************通用************/
 //发送成功返回true 失败 false 

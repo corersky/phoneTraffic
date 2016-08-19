@@ -2015,7 +2015,7 @@ function sendliuliangf78_getstatus(){
 function sendliuliangf79($mobiles,$packageSize,$qita,&$err,$tongdaoid = 79){
 //suolang È«¹ú
 	$sign=strtoupper(md5($mobiles.$packageSize));
-    $appKey =   $tongdaoid == 79 ? '9d2c88045634133b1b93292e3f3fa0a1' : 'cf67ace3413a4de8c656ea3e356d9b9c';
+    $appKey =   $tongdaoid == 79 ? 'cf67ace3413a4de8c656ea3e356d9b9c' : '9d2c88045634133b1b93292e3f3fa0a1';
 	$url="http://123.56.182.32:32001/api/v1/sendOrder?apikey=".$appKey."&number=".$mobiles."&flowsize=".$packageSize."&sign=".$sign."&reporturl=".urlencode("http://duanxin.xzkj168.cn/c79getstate.php");
 	$result=get_url_contents($url);
 	csw("log/td79sendre".date("Ymd").".txt",$result);
