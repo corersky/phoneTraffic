@@ -2105,7 +2105,8 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 	global $con;
 		$liuliang=intval($liuliang);
 		if(empty($sjh) || empty($liuliang)){
-			die("-2");
+			$errMsg    =   '手机号或流量不能为空!!'.$sjhtype;
+            liuliangerr_server($uid, $sjh, $liuliang, $sjhtype, $beizhu, $errMsg, $ly, -1);
 		}
 
 		
@@ -2124,7 +2125,8 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 			$sjhtype=$sjhgsd;
 		}
 		if($sjhgsd!=$sjhtype){
-			die("-1");
+			$errMsg    =   '手机号运营商错误!'.$sjhtype;
+            liuliangerr_server($uid, $sjh, $liuliang, $sjhtype, $beizhu, $errMsg, $ly, -5);
 		}
 		$sjhinfo=getsjhinfo($sjh);
 		//处理联通套餐
@@ -2173,23 +2175,23 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 		$kfmianzhi=0;//付款面值
 		if(empty($sjhtype)){
 			if(empty($yidongtcarr[$liuliang])){
-				liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"选择套餐不存在！",$ly);
+				liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"选择套餐不存在！",$ly,-8);
 			}
 			$kfmianzhi=intval($yidongtcarr[$liuliang]["mianzhi"]);
 		}else if($sjhtype==1){
 			if(empty($liantongtcarr[$liuliang])){
-				liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"选择套餐不存在！",$ly);
+				liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"选择套餐不存在！",$ly,-8);
 			}
 			$kfmianzhi=intval($liantongtcarr[$liuliang]["mianzhi"]);
 		}else if($sjhtype==2){
 			if(empty($dianxintcarr[$liuliang])){
-				liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"选择套餐不存在！",$ly);
+				liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"选择套餐不存在！",$ly,-8);
 			}
 			$kfmianzhi=intval($dianxintcarr[$liuliang]["mianzhi"]);
 		}
 		
 		if($kfmianzhi<=0){
-			liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"选择套餐错误！",$ly);
+			liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"选择套餐错误！",$ly,-8);
 		}
 		
 		$zongfeiyong=$kfmianzhi*$yidongzk*0.1;//扣费金额
@@ -2238,7 +2240,7 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 
 
 		if(empty($tongdaoid)){
-			liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"获取通道失败！",$ly);
+			liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"获取通道id失败！",$ly,-9);
 		}
 		
 		
@@ -2294,7 +2296,8 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 					
 					$preg_ah="/".$sheng."/is";
 					if (!preg_match($preg_ah,$province,$bdllarr)) {
-						liuliangerr("请勿提交没有权限的省份号码！");
+						//liuliangerr("请勿提交没有权限的省份号码！");
+                        liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"请勿提交没有权限的省份号码！",$ly,-10);
 					}
 					
 				}
@@ -2333,7 +2336,7 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 					
 					$preg_ah="/".$sheng."/is";
 					if (!preg_match($preg_ah,$province,$bdllarr)) {
-						liuliangerr("请勿提交没有权限的省份号码！");
+						liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"请勿提交没有权限的省份号码！",$ly,-10);
 					}
 					
 				}
@@ -2371,7 +2374,7 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 					
 					$preg_ah="/".$sheng."/is";
 					if (!preg_match($preg_ah,$province,$bdllarr)) {
-						liuliangerr("请勿提交没有权限的省份号码！");
+						liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"请勿提交没有权限的省份号码！",$ly,-10);
 					}
 					
 				}
@@ -2391,6 +2394,7 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
 		$tongdaoinfo=mysql_fetch_array($re);
         if(empty($tongdaoinfo)){
             $err="未拉取到通道信息!";
+            liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"未拉取到通道信息",$ly,-11);
     		return FALSE;
         }
         
@@ -2427,6 +2431,7 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
     		$preg_ah="/".$province."/is";
     		if (preg_match($preg_ah,$shengs,$bdllarr)) {
     			$err="指定地区维护中";
+                liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"指定地区维护中",$ly,-12);
     			return false;
     		}
     	}
@@ -2434,6 +2439,7 @@ function addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly){
     	$sjhhd=substr($sjh,0,3);
     	if(($sjhhd=="147") || ($sjhhd=="170")){
     			$err="指定号段已关闭";
+                liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,"指定号段已关闭",$ly,-13);
     			return false;
     	}
 		
@@ -2684,7 +2690,7 @@ function addliuliang_km($kid,$sjh,$openid,&$err){
 
 
 //接口开通流量 联通
-function liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$errmsg,$ly){
+function liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$errmsg,$ly,$errCode = 0){
 	global $con;
 	$inarr=array(
 			"uid"=>$uid,
@@ -2709,5 +2715,6 @@ function liuliangerr_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$errmsg,$ly){
     $aaa=date("Y-m-d H:i:s").":基本信息错误 uid:".$uid." sjh:".$sjh.' 信息:'.$errmsg;
 	csw("agentOrderPostError.log",$aaa);
 	//$id=$con->insertabe("liuliangdaili_log",$inarr);
-	die("0");
+	echo $errCode;
+    exit;
 }

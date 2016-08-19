@@ -26,12 +26,20 @@
 			$ly=2;
 		}
 	}
+    
+    if(empty($sjh)){
+        $errMsg    =   '手机号不能为空!';
+        liuliangerr_server($apizh, $sjh, $liuliang, $sjhtype, $beizhu, $errMsg, $ly, -1);
+    }
+    
+    if(empty($liuliang)){
+        $errMsg    =   '流量不能为空!';
+        liuliangerr_server($apizh, $sjh, $liuliang, $sjhtype, $beizhu, $errMsg, $ly, -2);
+    }
 	
-	if(empty($sjh) || empty($liuliang)){
-		//die("-2");
-	}
 	if(!is_numeric($sjh)){
-		die("-2");
+		$errMsg    =   '手机号格式不正确!';
+        liuliangerr_server($apizh, $sjh, $liuliang, $sjhtype, $beizhu, $errMsg, $ly, -3);
 	}
 	
 	$sql="select * from `user_daili` where username='".$apizh."' and pwd='".$apipwd."'";
@@ -39,11 +47,13 @@
 	$re=$con->query($sql);
 	$userinfo=mysql_fetch_array($re);
 	if(empty($userinfo)){
-		die("-2");
+		$errMsg    =   '用户信息不正确!!';
+        liuliangerr_server($apizh, $sjh, $liuliang, $sjhtype, $beizhu, $errMsg, $ly, -4);
 	}
     
     if(!in_array($sjhtype, array(0,1,2,3))){
-        die("-2");
+        $errMsg    =   '手机号运营商不正确!'.$sjhtype;
+        liuliangerr_server($apizh, $sjh, $liuliang, $sjhtype, $beizhu, $errMsg, $ly, -5);
     }
     
 	$uid=$userinfo["id"];
@@ -52,7 +62,8 @@
     $a=addliuliang_server($uid,$sjh,$liuliang,$sjhtype,$beizhu,$ly);
     if(!$a){
         $con->rollback();
-        die("-1");
+        $errMsg    =   '保存订单信息失败!';
+        liuliangerr_server($apizh, $sjh, $liuliang, $sjhtype, $beizhu, $errMsg, $ly, -6);
     }
     $con->commit();
 	echo $a;
